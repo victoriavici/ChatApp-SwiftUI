@@ -8,15 +8,19 @@
 import SwiftUI
 
 struct ContentView: View {
-    @Binding var document: ChatAppDocument
+   
 
     var body: some View {
-        TextEditor(text: $document.text)
+        VStack {
+            Text("Hello")
+               
+        }
+        .padding()
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(document: .constant(ChatAppDocument()))
+        ContentView()
     }
 }
