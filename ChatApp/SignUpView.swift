@@ -26,7 +26,7 @@ struct SignUpView: View {
         do {
             let result = try await Auth.auth().createUser(withEmail: email, password: password)
             try await model.updateDisplayName(for: result.user, displayName: displayName)
-            
+            appState.routes.append(.login)
         } catch {
             errorMassage = error.localizedDescription
             print(error)
