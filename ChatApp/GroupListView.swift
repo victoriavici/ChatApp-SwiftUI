@@ -14,7 +14,7 @@ struct GroupListView: View {
     var body: some View {
         List(groups) { group in
             NavigationLink {
-                Text(group.subject)
+                GroupDetailView(group: group)
             } label: {
                 HStack {
                     Image(systemName: "person.2")
@@ -22,7 +22,6 @@ struct GroupListView: View {
                 }
             }
         }
-        
     }
 }
 

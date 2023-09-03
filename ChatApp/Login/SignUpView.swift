@@ -62,9 +62,7 @@ struct SignUpView: View {
                 Spacer()
             }
             Text(errorMassage)
-        
         }
-        
     }
 }
 

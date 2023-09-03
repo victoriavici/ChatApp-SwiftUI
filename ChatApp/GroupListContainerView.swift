@@ -11,6 +11,7 @@ struct GroupListContainerView: View {
     
     @State private var isPresented: Bool = false
     @EnvironmentObject private var model: Model
+    
     var body: some View {
         VStack {
             HStack {
@@ -22,7 +23,8 @@ struct GroupListContainerView: View {
             
             GroupListView(groups: model.groups)
             Spacer()
-        }.task {
+        }
+        .task {
             do {
                 try await model.populateGroups()
             } catch {

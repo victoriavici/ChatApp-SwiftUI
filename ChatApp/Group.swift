@@ -23,6 +23,7 @@ extension Group {
     func toDictionary() -> [String: Any] {
         return ["subject": subject]
     }
+    
     static func fromSnapshot(snapshot: QueryDocumentSnapshot) -> Group? {
         let dictionary = snapshot.data()
         guard let subject = dictionary["subject"] as? String else {

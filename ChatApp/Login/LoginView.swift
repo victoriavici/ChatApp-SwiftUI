@@ -21,6 +21,7 @@ struct LoginView: View {
     private func login() async {
         
         do {
+      
             let result = try await Auth.auth().signIn(withEmail: email, password: password)
             appState.routes.append(.main)
         } catch {
