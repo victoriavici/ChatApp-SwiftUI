@@ -21,7 +21,7 @@ struct SettingView: View {
     @State private var settingsConfig = SettingsConfig()
     @FocusState var isEditing: Bool
     @EnvironmentObject private var model: Model
-    
+    @EnvironmentObject private var appState: AppState
     @State private var currentPhotoURL: URL? = Auth.auth().currentUser!.photoURL
     
     var displayName: String {
@@ -57,7 +57,12 @@ struct SettingView: View {
                 Spacer()
                 
                 Button("Signout") {
-                    
+                    do {
+                        try Auth.auth().signOut()
+                        appState.routes.append(.login)
+                    } catch {
+                        print(error.localizedDescription)
+                    }
                 }
             }
             .sheet(item: $settingsConfig.sourceType, content: { sourceType in
@@ -109,5 +114,6 @@ struct SettingView_Previews: PreviewProvider {
     static var previews: some View {
         SettingView()
             .environmentObject(Model())
+            .environmentObject(AppState())
     }
 }

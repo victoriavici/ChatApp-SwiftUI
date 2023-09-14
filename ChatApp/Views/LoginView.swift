@@ -25,7 +25,7 @@ struct LoginView: View {
             let result = try await Auth.auth().signIn(withEmail: email, password: password)
             appState.routes.append(.main)
         } catch {
-            print(error.localizedDescription)
+            appState.errorWrapper = ErrorWrapper(error: error)
         }
     }
     

@@ -47,6 +47,17 @@ struct ChatAppApp: App {
                 }
             }
         }
+        .overlay(alignment: .top, content: {
+            switch appState.loadingState {
+                case .idle:
+                    EmptyView()
+                case .loading(let message):
+                    LoadingView(message: message)
+            }
+        })
+        .sheet(item: $appState.errorWrapper, content: { errorWrapper in
+            ErrorView(errorWrapper: errorWrapper)
+        })
         .environmentObject(appState)
         .environmentObject(model)
     }

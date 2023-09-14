@@ -28,8 +28,7 @@ struct SignUpView: View {
             try await model.updateDisplayName(for: result.user, displayName: displayName)
             appState.routes.append(.login)
         } catch {
-            errorMassage = error.localizedDescription
-            print(error)
+            appState.errorWrapper = ErrorWrapper(error: error)
         }
     }
     
@@ -61,7 +60,6 @@ struct SignUpView: View {
                 
                 Spacer()
             }
-            Text(errorMassage)
         }
     }
 }

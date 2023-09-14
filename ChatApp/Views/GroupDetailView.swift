@@ -13,8 +13,10 @@ struct GroupDetailView: View {
     
     let group: Group
     @EnvironmentObject private var model: Model
+    @EnvironmentObject private var appState: AppState
     @State private var groupDetailConfig = GroupDetailConfig()
     @FocusState private var isChatTextFieldFocused: Bool
+    
     
     private func sendMessage() async throws {
         
@@ -41,6 +43,7 @@ struct GroupDetailView: View {
     
     private func clearFields() {
         groupDetailConfig.closeForm()
+        appState.loadingState = .idle
     }
     
     var body: some View {
@@ -83,14 +86,18 @@ struct GroupDetailView: View {
         })
         .overlay(alignment: .bottom, content: {
             ChatMessageInputView(groupDetailConfig: $groupDetailConfig, isChatTextFieldFocused: _isChatTextFieldFocused) {
+                
                 Task {
                     do {
+                        appState.loadingState = .loading("Sending...")
                         try await sendMessage()
                         clearFields()
                     } catch {
                         print(error.localizedDescription)
+                        clearFields()
                     }
                 }
+                
             }
             .padding()
         })
@@ -108,5 +115,6 @@ struct GroupDetailView_Previews: PreviewProvider {
     static var previews: some View {
         GroupDetailView(group: Group(subject: "Movies"))
             .environmentObject(Model())
+            .environmentObject(AppState())
     }
 }
